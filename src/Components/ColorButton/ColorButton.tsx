@@ -4,9 +4,10 @@ import React, { useState } from 'react';
 
 type Props = {
   defaultColor: string;
+  isReset: boolean;
 };
 
-const ColorButton: React.FC<Props> = ({ defaultColor }) => {
+const ColorButton: React.FC<Props> = ({ defaultColor, isReset }) => {
   const [color, setColor] = useState(defaultColor);
 
   const randomColor = () => {
@@ -22,9 +23,13 @@ const ColorButton: React.FC<Props> = ({ defaultColor }) => {
   };
 
   const changeColor = () => {
-    const randomColors = randomColor();
+    if (!isReset) {
+      const randomColors = randomColor();
 
-    setColor(randomColors);
+      return setColor(randomColors);
+    }
+
+    return setColor("white");
   };
 
   const DoubleClick = () => {
@@ -32,16 +37,16 @@ const ColorButton: React.FC<Props> = ({ defaultColor }) => {
   }
 
   return (
-    <button
-      type="button"
-      className="button--click"
-      onClick={changeColor}
-      onDoubleClick={DoubleClick}
-      style={{backgroundColor: color}}
-    >
-      Click me
-    </button>
-  )
+      <button
+        type="button"
+        className="button--click"
+        onClick={changeColor}
+        onDoubleClick={DoubleClick}
+        style={{backgroundColor: color}}
+      >
+        Click me
+      </button>
+    )
 }
 
 export default ColorButton;
